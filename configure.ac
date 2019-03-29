@@ -2178,6 +2178,20 @@ AS_HELP_STRING([--enable-video-dummy], [use dummy video driver [[default=yes]]])
     fi
 }
 
+dnl Check for Qualcomm MSM framebuffer video driver.
+CheckMSMFBVideo()
+{
+    AC_ARG_ENABLE(video-msmfb,
+AS_HELP_STRING([--enable-video-msmfb], [use Qualcomm MSM framebuffer driver [[default=yes]]]),
+                  , enable_video_msmfb=yes)
+    if test x$enable_video_msmfb = xyes; then
+        AC_DEFINE(SDL_VIDEO_DRIVER_MSMFB, 1, [ ])
+        SOURCES="$SOURCES $srcdir/src/video/msmfb/*.c"
+        have_video=yes
+        SUMMARY_video="${SUMMARY_video} msmfb"
+    fi
+}
+
 dnl Set up the QNX video driver if enabled
 CheckQNXVideo()
 {
@@ -3352,6 +3366,7 @@ case "$host" in
         CheckLinuxVersion
         CheckRPATH
         CheckVivanteVideo
+        CheckMSMFBVideo
 
         # Set up files for the audio library
         if test x$enable_audio = xyes; then
