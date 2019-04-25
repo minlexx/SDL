@@ -708,6 +708,17 @@ macro(CheckDirectFB)
   endif()
 endmacro()
 
+# Always enables MSMFB videodriver unconditionally
+# to actually use the driver, you need to set env var SDL_VIDEODRIVER anyway
+macro(CheckMsmFB)
+    set(HAVE_VIDEO_MSMFB TRUE)
+    file(GLOB VIDEO_MSMFB_SOURCES ${SDL2_SOURCE_DIR}/src/video/msmfb/*.c)
+    set(SOURCE_FILES ${SOURCE_FILES} ${VIDEO_MSMFB_SOURCES})
+    set(SDL_VIDEO_DRIVER_MSMFB 1)
+    set(SDL_VIDEO_RENDER_MSMFB 1)
+    set(HAVE_SDL_VIDEO TRUE)
+endmacro()
+
 # Requires:
 # - n/a
 macro(CheckVivante)
